@@ -29,6 +29,17 @@ char *ch, *start, *current;
 int f1 = 0, f2 = 0, f3 = 0;
 
 
+//enum
+enum tokenType
+{
+  TK_LP, TK_RP, TK_LB, TK_RB, TK_COM, TK_SEMICOL, TK_PLUS, TK_MINUS, TK_MUL,
+  TK_LSB, TK_RSB, TK_COL, TK_DOL, TK_EQ, TK_NOT, TK_GT, TK_LT, TK_GET, TK_LET,
+  TK_NEQ, TK_EQEQ, TK_WIF, TK_WINT, TK_WELSE, TK_WFLOAT, TK_ID, TK_WWIC, TK_WFDEF,
+  TK_WBOOL, TK_WTRUE, TK_WFLS
+
+}tokens;
+
+
 //function declarations
 void fileInitialize(); //initialize input and output files
 int getState(char *);  //dfa states - to tokenize input program
