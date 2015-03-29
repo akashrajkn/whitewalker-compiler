@@ -133,7 +133,45 @@ int getState(char *ch)
 
         case '$': { printToken(14); nextState = 0; start = current; break; }
 
+        case 'V': { nextState = 1; break; }
 
+        case 'i': { nextState = 2; break; }
+
+        case 'f': { nextState = 3; break; }
+
+        case 'r': { nextState = 4; break; }
+
+        case 's': { nextState = 5; break; }
+
+        case 'w': { nextState = 1; break; }
+
+        case 't': { nextState = 1; break; }
+
+        case '=': { nextState = 1; break; }
+
+        case '!': { nextState = 1; break; }
+
+        case '>': { nextState = 1; break; }
+
+        case '<': { nextState = 1; break; }
+
+        case '"': { nextState = 1; break; }
+
+        default : if(isAlpha(ch))
+                  {  
+
+                  }
+                  else if(isNum(ch))
+                  {
+ 
+                     break;
+                  }
+                  else
+                  {
+                    fprintf(fout, "TK_ERR       %d   \n", -1);
+
+
+                  }
       }
     }
   }
