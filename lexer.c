@@ -34,7 +34,7 @@ enum tokenType
 {
   TK_LP, TK_RP, TK_LB, TK_RB, TK_COM, TK_SEMICOL, TK_PLUS, TK_MINUS, TK_MUL,
   TK_LSB, TK_RSB, TK_COL, TK_DOL, TK_EQ, TK_NOT, TK_GT, TK_LT, TK_GET, TK_LET,
-  TK_NEQ, TK_EQEQ, TK_WIF, TK_WINT, TK_WELSE, TK_WFLOAT, TK_ID, TK_WWIC, TK_WFDEF,
+  TK_NEQ, TK_EQEQ, TK_WIF, TK_WINT, TK_WELSE, TK_WFLOAT, TK_ID, TK_WHOD, TK_WFDEF,
   TK_WBOOL, TK_WTRUE, TK_WFLS, TK_WCHAR, TK_WHILE, TK_WRET
 
 }tokens;
@@ -149,15 +149,17 @@ int getState(char *ch)
 
         case 'r': { nextState = 40; break; }
 
-        case '=': { nextState = 1; break; }
+        case 'H': { nextState = 45; break; }
 
-        case '!': { nextState = 1; break; }
+        case '=': { nextState = 50; break; }
 
-        case '>': { nextState = 1; break; }
+        case '!': { nextState = 51; break; }
 
-        case '<': { nextState = 1; break; }
+        case '>': { nextState = 52; break; }
 
-        case '"': { nextState = 1; break; }
+        case '<': { nextState = 53; break; }
+
+        case '"': { nextState = 54; break; }
 
         default : if(isAlpha(ch))
                   {  
@@ -797,7 +799,208 @@ int getState(char *ch)
         break;
       }
     }
-    
+
+    case 45:
+    {
+      if(*ch=='o')  // "Ho"
+      {
+        nextState = 46;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 46:
+    {
+      if(*ch=='d')  // "Hod"
+      {
+        nextState = 47;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 47:
+    {
+      if(*ch=='o')  // "Hodo"
+      {
+        nextState = 48;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 48:
+    {
+      if(*ch=='r')  // "Hodor"
+      {
+        nextState = 49;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 49:
+    {
+      if(checkID(ch))
+      {
+        retract();
+        printKeyword(12); //print the keyword "Hodor"
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        nextState = 5;
+        break;
+      }
+    }
+
+    case 50:
+    {
+      if(*ch=='=')
+      {
+        printToken(22);
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        printToken(15);
+        retract();
+        nextState = 0;
+        break;
+      }
+    }
+
+    case 51:
+    {
+      if(*ch=='=')
+      {
+        printToken(21);
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        printToken(16);
+        retract();
+        nextState = 0;
+        break;
+      }
+    }
+
+    case 52:
+    {
+      if(*ch=='=')
+      {
+        printToken(19);
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        printToken(17);
+        retract();
+        nextState = 0;
+        break;
+      }
+    }
+
+    case 53:
+    {
+      if(*ch=='=')
+      {
+        printToken(20);
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        printToken(18);
+        retract();
+        nextState = 0;
+        break;
+      }
+    }
+
+    case 54:
+    {
+      if(*(ch-1)=='"')
+      {
+        fprintf(fout, "TK_STRING          ", );
+      }
+
+      if(*(ch)=='"')
+      {
+        fprintf(fout, "\n" );
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        fprintf(fout, "%c", *ch );
+        nextState = 54;
+        break;
+      }
+    }
+
+    case 55:
+    {
+      if(*ch == '.')
+      {
+        nextState = 56;
+        break;
+      }
+      else if(isNumber(ch))
+      {
+        nextState = 55;
+        break;
+      }
+      else
+      {
+        retract();
+        nextState = 57;
+        break;
+      }
+    }
+
+    case 56:
+    {
+      if(!isNumber(ch))
+      {
+        retract();
+        printFloat();
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        nextState = 56;
+        break;
+      }
+    }
+
+    case 57:
+    {
+      retract();
+      printInt();
+      nextState = 0;
+      break;
+    }
+
 
   }//switch statement for state variable ends here
 
@@ -830,6 +1033,8 @@ void printKeyword(int choice)
     case 10: fprintf(fout, "TK_WHILE      %d        while\n", TK_WHILE); break;
 
     case 11: fprintf(fout, "TK_WRET       %d        return\n", TK_WRET); break;
+
+    case 12: fprintf(fout, "TK_WHOD       %d        Hodor\n", TK_WHOD); break;
 
 
   }
