@@ -133,11 +133,9 @@ int getState(char *ch)
 
         case '$': { printToken(14); nextState = 0; start = current; break; }
 
-        case 'V': { nextState = 1; break; }
+        case 'i': { nextState = 1; break; }
 
-        case 'i': { nextState = 2; break; }
-
-        case 'f': { nextState = 3; break; }
+        case 'f': { nextState = 7; break; }
 
         case 'r': { nextState = 4; break; }
 
@@ -176,10 +174,188 @@ int getState(char *ch)
     }
   }
 
+  case 1:
+    {
+      switch(*ch)
+      {
+        case 'n': { nextState = 2; break; } //current recognised is "in"
 
+        case 'f': { nextState = 3; break; } //current recognised is "if"
+
+        default : { if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; } }
+      }
+
+      break;
+    }
+
+    case 2:
+    {
+      if(*ch=='t')
+      {
+        nextState = 6;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 3:
+    {
+      if(checkID(ch))
+      {
+        retract();
+        printKeyword(2); //prints "if" keyword
+        break;
+      }
+      else
+      {
+        nextState = 10;
+        break;
+      }
+    }
+
+    case 4: //this case prints the identifier -- > identifier recognized
+    {
+      retract();
+      printID();
+      nextState = 0;
+      break;
+    }
+
+    case 5: //current string being read maybe an identifier
+    {
+      if(checkID(ch))
+      {
+        retract();
+        printID();
+        nextState = 0;
+        break;
+      }
+      else if( *ch=='_' || (*ch>='0' && *ch<='9') || isAlpha(ch) )
+      {
+        nextState = 10; //still a part of identifier
+        break;
+      }
+    }
+
+    case 6:
+    {
+      if(checkID(ch))
+      {
+        retract();
+        printKeyword(1); //print the keyword "int"
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        nextState = 10;
+        break;
+      }
+    }
+
+    case 7:
+    {
+      switch(*ch)
+      {
+        case 'l': { nextState = 8; break; }  //current = "fl"
+
+        case 'd': { nextState = 9; break; }  //current = "fd"
+
+        case 'a': { nextState = 10; break; } //current = "fa"
+
+        default : { if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; } }
+      }
+
+      break;
+    }
+
+    case 8:
+    {
+      if(*ch=='o')  // "flo"
+      {
+        nextState = 11;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+
+    }
+
+    case 9:
+    {
+
+    }
+
+    case 10:
+    {
+
+    }
+
+    case 11:
+    {
+      if(*ch=='a')
+      {
+        nextState = 12;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+
+    }
+
+    case 12:
+    {
+      if(*ch=='t')
+      {
+        nextState = 13;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 13:
+    {
+      if(checkID(ch))
+      {
+        retract();
+        printKeyword(3); //print the keyword "float"
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        nextState = 10;
+        break;
+      }
+    }
+
+  }
 
 }
 
 
+/* print the corresponding keyword */
+void printKeyword(int choice)
+{
+  switch(choice)
+  {
+    case 1: fprintf(fout, "TK_WINT       %d        int\n", TK_WINT); break;
 
+    case 2: fprintf(fout, "TK_WIF        %d        if\n", TK_WIF); break;
+
+
+  }
+
+  f3 = 1;
+}
 
