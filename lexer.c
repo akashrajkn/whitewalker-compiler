@@ -210,7 +210,7 @@ int getState(char *ch)
       }
       else
       {
-        nextState = 10;
+        nextState = 5;
         break;
       }
     }
@@ -250,7 +250,7 @@ int getState(char *ch)
       }
       else
       {
-        nextState = 10;
+        nextState = 5;
         break;
       }
     }
@@ -287,12 +287,28 @@ int getState(char *ch)
 
     case 9:
     {
-
+      if(*ch=='e')  // "fde"
+      {
+        nextState = 14;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
     }
 
     case 10:
     {
-
+      if(*ch=='l')  // "fal"
+      {
+        nextState = 16;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
     }
 
     case 11:
@@ -333,9 +349,85 @@ int getState(char *ch)
       }
       else
       {
-        nextState = 10;
+        nextState = 5;
         break;
       }
+    }
+
+    case 14:
+    {
+      if(*ch=='f')  // "fdef"
+      {
+        nextState = 15;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 15:
+    {
+      if(checkID(ch))
+      {
+        retract();
+        printKeyword(4); //print the keyword "fdef"
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        nextState = 5;
+        break;
+      }
+    }
+
+    case 16:
+    {
+      if(*ch=='s')  // "fals"
+      {
+        nextState = 17;
+        break;
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 17:
+    {
+      if(*ch=='e')  // "false"
+      {
+        nextState = 18;
+        break; 
+      }
+      else
+      {
+        if(checkID(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+      }
+    }
+
+    case 18:
+    {
+      if(checkID(ch))
+      {
+        retract();
+        printKeyword(5); //print the keyword "false"
+        nextState = 0;
+        break;
+      }
+      else
+      {
+        nextState = 5;
+        break;
+      }
+    }
+
+    case 19:
+    {
+      
     }
 
   }//switch statement for state variable ends here
@@ -351,6 +443,12 @@ void printKeyword(int choice)
     case 1: fprintf(fout, "TK_WINT       %d        int\n", TK_WINT); break;
 
     case 2: fprintf(fout, "TK_WIF        %d        if\n", TK_WIF); break;
+
+    case 3: fprintf(fout, "TK_WFLOAT     %d        float\n", TK_WFLOAT); break;
+
+    case 4: fprintf(fout, "TK_WFDEF      %d        fdef\n", TK_WFDEF); break;
+
+    case 5: fprintf(fout, "TK_WFLS       %d        false\n", TK_WFLS); break;
 
 
   }
