@@ -224,7 +224,7 @@ int getState(char *ch)
     case 4: //this case prints the identifier -- > identifier recognized
     {
       retract();
-      printID();
+      printIdentifier();
       nextState = 0;
       break;
     }
@@ -234,7 +234,7 @@ int getState(char *ch)
       if(checkID(ch))
       {
         retract();
-        printID();
+        printIdentifier();
         nextState = 0;
         break;
       }
@@ -996,7 +996,7 @@ int getState(char *ch)
     case 57:
     {
       retract();
-      printInt();
+      printInteger();
       nextState = 0;
       break;
     }
@@ -1035,10 +1035,49 @@ void printKeyword(int choice)
     case 11: fprintf(fout, "TK_WRET       %d        return\n", TK_WRET); break;
 
     case 12: fprintf(fout, "TK_WHOD       %d        Hodor\n", TK_WHOD); break;
-
-
   }
 
   f3 = 1;
 }
 
+
+/* print the identifiers */
+void printIdentifier()
+{
+  fprintf(fout, "TK_ID        %d         ", TK_ID);
+
+  printerFunc();
+}
+
+
+/* print integers */
+void printInteger()
+{
+  fprintf(fout, "TK_WINT      %d       ", TK_WINT);
+
+  printerFunc();
+}
+
+
+/* print floating point numbers */
+void printFloat()
+{
+  fprintf(fout, "TK_WFLOAT    %d       ", TK_WFLOAT);
+
+  printerFunc(); 
+}
+
+
+/* print the string into the file */
+void printerFunc()
+{
+  while(start!=current)
+  {
+    fprintf(fout, "%c", *start);
+    start++;
+  }
+
+  fprintf(fout, "%c\n", *start );
+
+  f2 = 1;
+}
