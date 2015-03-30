@@ -49,7 +49,7 @@ void printerFunc();            //printer function--used in printKeyword, printTo
 void printIdentifier();        //print the recognised identifier
 void printFloat();             //print the floating point number
 void printInteger();           //print the integer
-void retract();                //used to go back 1 position after look-ahead
+void backTrack();                //used to go back 1 position after look-ahead
 int isAlpha(char *);           //used to test if current character is an alphabet
 int isNumber(char *);          //used to test if current character si a number
 int checkSpecialChar(char *);  //check if the current character is a special character
@@ -192,10 +192,12 @@ int getState(char *ch)
                     }
 
                     fprintf(fout, "\n");
-                    retract();
+                    backTrack();
                     break;
                   }
       }
+
+      break;
     }
 
     case 1:
@@ -206,7 +208,7 @@ int getState(char *ch)
 
         case 'f': { nextState = 3; break; } //current recognised is "if"
 
-        default : { if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; } }
+        default : { if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; } }
       }
 
       break;
@@ -221,15 +223,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 3:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(2); //prints "if" keyword
         break;
       }
@@ -238,11 +242,13 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 4: //this case prints the identifier -- > identifier recognized
     {
-      retract();
+      backTrack();
       printIdentifier();
       nextState = 0;
       break;
@@ -252,23 +258,25 @@ int getState(char *ch)
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printIdentifier();
         nextState = 0;
         break;
       }
       else if( *ch=='_' || (*ch>='0' && *ch<='9') || isAlpha(ch) )
       {
-        nextState = 10; //still a part of identifier
+        nextState = 5; //still a part of identifier
         break;
       }
+
+      break;
     }
 
     case 6:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(1); //print the keyword "int"
         nextState = 0;
         break;
@@ -278,6 +286,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 7:
@@ -290,7 +300,7 @@ int getState(char *ch)
 
         case 'a': { nextState = 10; break; } //current = "fa"
 
-        default : { if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; } }
+        default : { if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; } }
       }
 
       break;
@@ -305,9 +315,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
 
+      break;
     }
 
     case 9:
@@ -319,8 +330,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 10:
@@ -332,8 +345,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 11:
@@ -345,9 +360,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
 
+      break;
     }
 
     case 12:
@@ -359,15 +375,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 13:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(3); //print the keyword "float"
         nextState = 0;
         break;
@@ -377,6 +395,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 14:
@@ -388,15 +408,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 15:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(4); //print the keyword "fdef"
         nextState = 0;
         break;
@@ -406,6 +428,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 16:
@@ -417,8 +441,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 17:
@@ -430,15 +456,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 18:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(5); //print the keyword "false"
         nextState = 0;
         break;
@@ -448,6 +476,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 19:
@@ -459,8 +489,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 20:
@@ -472,8 +504,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 21:
@@ -485,15 +519,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 22:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(6); //print the keyword "else"
         nextState = 0;
         break;
@@ -503,6 +539,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 23:
@@ -514,8 +552,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 24:
@@ -527,8 +567,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 25:
@@ -540,15 +582,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 26:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(7); //print the keyword "char"
         nextState = 0;
         break;
@@ -558,6 +602,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 27:
@@ -569,8 +615,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 28:
@@ -582,8 +630,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 29:
@@ -595,15 +645,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 30:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(8); //print the keyword "bool"
         nextState = 0;
         break;
@@ -613,6 +665,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 31:
@@ -624,8 +678,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 32:
@@ -637,8 +693,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 33:
@@ -650,15 +708,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 34:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(9); //print the keyword "true"
         nextState = 0;
         break;
@@ -668,6 +728,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 35:
@@ -679,8 +741,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 36:
@@ -692,8 +756,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 37:
@@ -705,8 +771,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 38:
@@ -718,15 +786,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 39:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(10); //print the keyword "true"
         nextState = 0;
         break;
@@ -736,6 +806,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 40:
@@ -747,8 +819,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 41:
@@ -760,8 +834,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 42:
@@ -773,8 +849,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }  
 
     case 43:
@@ -786,8 +864,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 44:
@@ -799,15 +879,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 45:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(11); //print the keyword "return"
         nextState = 0;
         break;
@@ -817,6 +899,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 46:
@@ -828,8 +912,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 47:
@@ -841,8 +927,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 48:
@@ -854,8 +942,10 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 49:
@@ -867,15 +957,17 @@ int getState(char *ch)
       }
       else
       {
-        if(checkSpecialChar(ch)){ nextState = 4;retract(); break; } else{ nextState = 5; break; }
+        if(checkSpecialChar(ch)){ nextState = 4;backTrack(); break; } else{ nextState = 5; break; }
       }
+
+      break;
     }
 
     case 50:
     {
       if(checkSpecialChar(ch))
       {
-        retract();
+        backTrack();
         printKeyword(12); //print the keyword "Hodor"
         nextState = 0;
         break;
@@ -885,6 +977,8 @@ int getState(char *ch)
         nextState = 5;
         break;
       }
+
+      break;
     }
 
     case 51:
@@ -898,10 +992,12 @@ int getState(char *ch)
       else
       {
         printToken(15);
-        retract();
+        backTrack();
         nextState = 0;
         break;
       }
+
+      break;
     }
 
     case 52:
@@ -915,10 +1011,12 @@ int getState(char *ch)
       else
       {
         printToken(16);
-        retract();
+        backTrack();
         nextState = 0;
         break;
       }
+
+      break;
     }
 
     case 53:
@@ -932,10 +1030,12 @@ int getState(char *ch)
       else
       {
         printToken(17);
-        retract();
+        backTrack();
         nextState = 0;
         break;
       }
+
+      break;
     }
 
     case 54:
@@ -949,10 +1049,12 @@ int getState(char *ch)
       else
       {
         printToken(18);
-        retract();
+        backTrack();
         nextState = 0;
         break;
       }
+
+      break;
     }
 
     case 55:
@@ -974,6 +1076,8 @@ int getState(char *ch)
         nextState = 54;
         break;
       }
+
+      break;
     }
 
     case 56:
@@ -990,17 +1094,19 @@ int getState(char *ch)
       }
       else
       {
-        retract();
+        backTrack();
         nextState = 57;
         break;
       }
+
+      break;
     }
 
     case 57:
     {
       if(!isNumber(ch))
       {
-        retract();
+        backTrack();
         printFloat();
         nextState = 0;
         break;
@@ -1010,11 +1116,13 @@ int getState(char *ch)
         nextState = 56;
         break;
       }
+
+      break;
     }
 
     case 58:
     {
-      retract();
+      backTrack();
       printInteger();
       nextState = 0;
       break;
@@ -1023,6 +1131,7 @@ int getState(char *ch)
 
   }//switch statement for state variable ends here
 
+  return nextState;
 }
 
 
@@ -1179,7 +1288,7 @@ void printToken(int choice)
 
 
 /* this function brings the pointer back 1 position---for backtracking */
-void retract()
+void backTrack()
 {
   current--;
 }
