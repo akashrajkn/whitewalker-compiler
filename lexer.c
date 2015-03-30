@@ -172,9 +172,8 @@ int getState(char *ch)
                   }
       }
     }
-  }
 
-  case 1:
+    case 1:
     {
       switch(*ch)
       {
@@ -339,7 +338,7 @@ int getState(char *ch)
       }
     }
 
-  }
+  }//switch statement for state variable ends here
 
 }
 
