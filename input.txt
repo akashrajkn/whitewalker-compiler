@@ -1,8 +1,10 @@
+ValarMorghulis  // All programs must die :P
+
 fdef KingsLanding:
 {
   int a, b, c;
 
-  Hodor(i, 1, 4)
+  Hodor(i, 1, 4)  //rep statement -- syntax rep(variable, start, end)
   {
     a = a+1;
   }
@@ -22,3 +24,5 @@ fdef KingsLanding:
   }
 
 }
+
+ValarDohaeris  // All programs must serve
