@@ -1,0 +1,45 @@
+1	program → TK_VM TK_WFDEF TK_ID TK_COL TK_LP body TK_RP TK_VD
+2	body → construct body
+3	body → ε
+4	construct → statement
+5	construct → loop
+6	construct → condition
+7	statement → varDec
+8	statement → assignment
+9	varDec → dataType TK_ID varList TK_SEMICOL
+10	varList → TK_COM TK_ID varList
+11	varList → ε
+12	dataType → TK_WINT
+13	dataType → TK_WFLOAT
+14	dataType → TK_BOOL
+15	assignment → TK_ID TK_EQ expr TK_SEMICOL
+16	loop → rep
+17	loop → whileCond
+18	rep → TK_WHOD TK_LB TK_ID TK_COM TK_WINT TK_COM TK_WINT TK_RB TK_LP body TK_RP
+19	whileCond → TK_WHILE TK_LB condExpr TK_RB TK_LP body TK_RP
+20	condition → TK_WIF TK_LB condExpr TK_RB TK_LP body TK_RP elseCond
+21	elseCond → TK_WELSE TK_LP body TK_RP
+22	elseCond → ε
+23	condExpr → expr relation expr
+24	relation → TK_EQEQ
+25	relation → TK_NEQ
+26	relation → TK_GT
+27	relation → TK_LT
+28	relation → TK_GET
+29	relation → TK_LET
+30	expr → term expr1
+31	expr1 → TK_PLUS expr
+32	expr1 → TK_MINUS expr
+33	expr1 → ε
+34	term → factor term1
+35	term1 → TK_MUL term
+36	term1 → TK_DIV term
+37	term1 → ε
+38	factor → TK_ID
+39	factor → literal
+40	factor → TK_LB expr TK_RB
+41	factor → TK_MINUS factor
+42	literal → TK_WINT
+43	literal → TK_WFLOAT
+44	literal → TK_WTRUE
+45	literal → TK_WFLS
