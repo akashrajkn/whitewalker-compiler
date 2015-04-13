@@ -1,0 +1,21 @@
+program 	-> TK_VM TK_WFDEF TK_ID TK_COL TK_LP body TK_RP TK_VD
+body 		-> construct body | EPSILON
+construct 	-> statement | loop | condition
+statement 	-> varDec | assignment
+varDec		-> dataType TK_ID varList TK_SEMICOL
+varList		-> TK_COM TK_ID varList | EPSILON
+dataType	-> TK_WINT | TK_WFLOAT | TK_BOOL
+assignment 	-> TK_ID TK_EQ expr TK_SEMICOL
+loop		-> rep | while
+rep			-> TK_WHOD TK_LB TK_ID TK_COM TK_WINT TK_COM TK_WINT TK_RB Tk_LP body TK_RP
+while 		-> TK_WHILE TK_LB condExpr TK_RB TK_LP body TK_RP
+condition 	-> TK_WIF TK_LB condExpr TK_RB TK_LP body TK_RP else
+else		-> TK_WELSE TK_LP body TK_RP | EPSILON
+condExpr 	-> expr relation expr
+relation 	-> TK_EQEQ | TK_NEQ | TK_GT | TK_LT | TK_GET | TK_LET
+expr 		-> term expr1
+expr1		-> TK_PLUS expr | TK_MINUS expr | EPSILON
+term 		-> factor term1
+term1		-> TK_MUL term | TK_DIV term | EPSILON
+factor 		-> TK_ID | literal | TK_LB expr TK_RB | TK_MINUS factor
+literal 	-> TK_WINT | TK_WFLOAT | TK_WTRUE | TK_WFLS
