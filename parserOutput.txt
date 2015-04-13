@@ -1,0 +1,288 @@
+TK_VM
+program → TK_VM TK_WFDEF TK_ID TK_COL TK_LP body TK_RP TK_VD
+
+TK_WFDEF
+TK_ID
+TK_COL
+TK_LP
+TK_WINT
+body → construct body
+
+construct → statement
+
+statement → varDec
+
+varDec → dataType TK_ID varList TK_SEMICOL
+
+dataType → TK_WINT
+
+TK_ID
+TK_COM
+varList → TK_COM TK_ID varList
+
+TK_ID
+TK_COM
+varList → TK_COM TK_ID varList
+
+TK_ID
+TK_SEMICOL
+varList → ε
+
+TK_WHOD
+body → construct body
+
+construct → loop
+
+loop → rep
+
+rep → TK_WHOD TK_LB TK_ID TK_COM TK_WINT TK_COM TK_WINT TK_RB TK_LP body TK_RP
+
+TK_LB
+TK_ID
+TK_COM
+TK_WINT
+TK_COM
+TK_WINT
+TK_RB
+TK_LP
+TK_ID
+body → construct body
+
+construct → statement
+
+statement → assignment
+
+assignment → TK_ID TK_EQ expr TK_SEMICOL
+
+TK_EQ
+TK_ID
+expr → term expr1
+
+term → factor term1
+
+factor → TK_ID
+
+TK_PLUS
+term1 → ε
+
+expr1 → TK_PLUS expr
+
+TK_WINT
+expr → term expr1
+
+term → factor term1
+
+factor → literal
+
+literal → TK_WINT
+
+TK_SEMICOL
+term1 → ε
+
+expr1 → ε
+
+TK_RP
+body → ε
+
+TK_WHILE
+body → construct body
+
+construct → loop
+
+loop → whileCond
+
+whileCond → TK_WHILE TK_LB condExpr TK_RB TK_LP body TK_RP
+
+TK_LB
+TK_WINT
+condExpr → expr relation expr
+
+expr → term expr1
+
+term → factor term1
+
+factor → literal
+
+literal → TK_WINT
+
+TK_EQEQ
+term1 → ε
+
+expr1 → ε
+
+relation → TK_EQEQ
+
+TK_WINT
+expr → term expr1
+
+term → factor term1
+
+factor → literal
+
+literal → TK_WINT
+
+TK_RB
+term1 → ε
+
+expr1 → ε
+
+TK_LP
+TK_ID
+body → construct body
+
+construct → statement
+
+statement → assignment
+
+assignment → TK_ID TK_EQ expr TK_SEMICOL
+
+TK_EQ
+TK_ID
+expr → term expr1
+
+term → factor term1
+
+factor → TK_ID
+
+TK_MUL
+term1 → TK_MUL term
+
+TK_WINT
+term → factor term1
+
+factor → literal
+
+literal → TK_WINT
+
+TK_SEMICOL
+term1 → ε
+
+expr1 → ε
+
+TK_RP
+body → ε
+
+TK_WIF
+body → construct body
+
+construct → condition
+
+condition → TK_WIF TK_LB condExpr TK_RB TK_LP body TK_RP elseCond
+
+TK_LB
+TK_ID
+condExpr → expr relation expr
+
+expr → term expr1
+
+term → factor term1
+
+factor → TK_ID
+
+TK_EQEQ
+term1 → ε
+
+expr1 → ε
+
+relation → TK_EQEQ
+
+TK_ID
+expr → term expr1
+
+term → factor term1
+
+factor → TK_ID
+
+TK_RB
+term1 → ε
+
+expr1 → ε
+
+TK_LP
+TK_ID
+body → construct body
+
+construct → statement
+
+statement → assignment
+
+assignment → TK_ID TK_EQ expr TK_SEMICOL
+
+TK_EQ
+TK_ID
+expr → term expr1
+
+term → factor term1
+
+factor → TK_ID
+
+TK_PLUS
+term1 → ε
+
+expr1 → TK_PLUS expr
+
+TK_WINT
+expr → term expr1
+
+term → factor term1
+
+factor → literal
+
+literal → TK_WINT
+
+TK_SEMICOL
+term1 → ε
+
+expr1 → ε
+
+TK_RP
+body → ε
+
+TK_WELSE
+elseCond → TK_WELSE TK_LP body TK_RP
+
+TK_LP
+TK_ID
+body → construct body
+
+construct → statement
+
+statement → assignment
+
+assignment → TK_ID TK_EQ expr TK_SEMICOL
+
+TK_EQ
+TK_ID
+expr → term expr1
+
+term → factor term1
+
+factor → TK_ID
+
+TK_PLUS
+term1 → ε
+
+expr1 → TK_PLUS expr
+
+TK_WINT
+expr → term expr1
+
+term → factor term1
+
+factor → literal
+
+literal → TK_WINT
+
+TK_SEMICOL
+term1 → ε
+
+expr1 → ε
+
+TK_RP
+body → ε
+
+TK_RP
+body → ε
+
+TK_VD
+
