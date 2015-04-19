@@ -2,9 +2,9 @@
   WHITEWALKER-COMPILER
 
   Authors: Akash Raj K N
-           Anjali Thakur
            Ashwin Raghavan
            Sowmya G Kumar
+           Anjali Thakur
 */
 
 #include <stdio.h>
@@ -1084,18 +1084,18 @@ int getState(char *ch)
     {
       if(*ch == '.')
       {
-        nextState = 56;
+        nextState = 57;
         break;
       }
       else if(isNumber(ch))
       {
-        nextState = 55;
+        nextState = 56;
         break;
       }
       else
       {
         backTrack();
-        nextState = 57;
+        nextState = 58;
         break;
       }
 
@@ -1113,7 +1113,7 @@ int getState(char *ch)
       }
       else
       {
-        nextState = 56;
+        nextState = 57;
         break;
       }
 
