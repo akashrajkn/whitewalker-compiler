@@ -44,6 +44,20 @@ TK_ID        25         a
 TK_PLUS       +        6
 TK_WINT      22       1
 TK_SEMICOL    ;        5
+TK_WIF        21        if
+TK_LB         (        2
+TK_ID        25         a
+TK_EQEQ       ==       20
+TK_ID        25         b
+TK_RB         )        3
+TK_LP         {        0
+TK_ID        25         c
+TK_EQ         =        13
+TK_ID        25         c
+TK_PLUS       +        6
+TK_WINT      22       1
+TK_SEMICOL    ;        5
+TK_RP         }        1
 TK_RP         }        1
 TK_WHILE      32        while
 TK_LB         (        2
@@ -84,4 +98,3 @@ TK_SEMICOL    ;        5
 TK_RP         }        1
 TK_RP         }        1
 TK_VD        25         ValarDohaeris
-TK_EOF
