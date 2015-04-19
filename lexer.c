@@ -85,7 +85,7 @@ int main()
     }
   }
 
-  fprintf(fout, "TK_EOF\n");
+  //fprintf(fout, "TK_EOF\n");
 
   fcloseall();      //close all- file pointers
 
