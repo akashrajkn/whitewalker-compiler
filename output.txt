@@ -15,6 +15,12 @@ TK_SEMICOL    ;        5
 TK_WFLOAT     24        float
 TK_ID        25         p
 TK_SEMICOL    ;        5
+TK_ID        25         a
+TK_EQ         =        13
+TK_ID        25         b
+TK_DIV        /        36
+TK_ID        25         c
+TK_SEMICOL    ;        5
 TK_ID        25         p
 TK_EQ         =        13
 TK_WFLOAT    24       1.101

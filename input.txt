@@ -5,6 +5,8 @@ fdef KingsLanding:
   int a, b, c;
   float p;
 
+  a = b/c;
+
   p = 1.101;
   a = 5;
 
