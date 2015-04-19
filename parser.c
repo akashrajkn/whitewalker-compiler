@@ -88,9 +88,16 @@ int main()
 
   	}
 
-  	lineNo++;
+  	lineNo++; 
+  	// printf("%d\n", lineNo);
 
   }
+
+  if (strcmp(token,"TK_VD"))
+  	fprintf(fout, "\nERROR\n");
+
+  else
+  	fprintf(fout, "\nDONE\n");
 
   fcloseall();      				//close all- file pointers
 
@@ -535,19 +542,20 @@ void parsing()
 
 				 case 46:
 
-				 	fprintf(fout, "Error\n");
+				 	fprintf(fout, "\nERROR\n");
 				 	exit(0);
 
 				 	break;
 
 				 case 47:
 
-				 	fprintf(fout, "Error\n");
+				 	fprintf(fout, "\nERROR\n");
 				 	exit(0);
 
 				 	break;
 
 				 default:
+				 	fprintf(fout, "\nERROR\n");
 				 	exit(0);
 
 			}
@@ -753,18 +761,18 @@ void mapping()
 
 	else
 	{
-		//printf("Done\n");
+		printf("Unrecognized Token\n");
 	}
 
 }
 
 void fileInitialize()
 {
-  fin = fopen("output.txt", "r");
+  fin = fopen("lexerOutput.txt", "r");
   fout = fopen("parserOutput.txt", "w");
 
   if(fin==NULL || fout==NULL)
   {
-    printf("File Initialization Error\n");
+    printf("File Initialization ERROR\n");
   }
 }
