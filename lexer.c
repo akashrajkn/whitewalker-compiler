@@ -35,7 +35,7 @@ enum tokenType
   TK_LP, TK_RP, TK_LB, TK_RB, TK_COM, TK_SEMICOL, TK_PLUS, TK_MINUS, TK_MUL,
   TK_LSB, TK_RSB, TK_COL, TK_DOL, TK_EQ, TK_NOT, TK_GT, TK_LT, TK_GET, TK_LET,
   TK_NEQ, TK_EQEQ, TK_WIF, TK_WINT, TK_WELSE, TK_WFLOAT, TK_ID, TK_WHOD, TK_WFDEF,
-  TK_WBOOL, TK_WTRUE, TK_WFLS, TK_WCHAR, TK_WHILE, TK_WRET
+  TK_WBOOL, TK_WTRUE, TK_WFLS, TK_WCHAR, TK_WHILE, TK_WRET, TK_VD, TK_VM, TK_DIV
 
 }tokens;
 
@@ -49,7 +49,7 @@ void printerFunc();            //printer function--used in printKeyword, printTo
 void printIdentifier();        //print the recognised identifier
 void printFloat();             //print the floating point number
 void printInteger();           //print the integer
-void backTrack();                //used to go back 1 position after look-ahead
+void backTrack();              //used to go back 1 position after look-ahead
 int isAlpha(char *);           //used to test if current character is an alphabet
 int isNumber(char *);          //used to test if current character si a number
 int checkSpecialChar(char *);  //check if the current character is a special character
@@ -183,7 +183,7 @@ int getState(char *ch)
                   }
                   else
                   {
-                    fprintf(fout, "TK_ERR             %d          \n", -1);
+                    fprintf(fout, "TK_ERR       %d           ", -1);
 
                     while( *current!=EOF && *current!='$' && *current!='\0' && *current!=0 )
                     {
@@ -1243,10 +1243,10 @@ void printToken(int choice)
     case 9: fprintf(fout, "TK_MUL        *        %d\n", TK_MUL);
             break;
 
-    case 10: fprintf(fout, "TK_LSB        [        %d\n", TK_LSB);
+    case 10: fprintf(fout, "TK_DIV        /        %d\n", TK_DIV);
             break;
 
-    case 11: //fprintf(fout, "TK_SEMICOL    ;        %d\n", TK_SEMICOL);
+    case 11: fprintf(fout, "TK_LSB        [        %d\n", TK_LSB);;
             break;
 
     case 12: fprintf(fout, "TK_RSB        ]        %d\n", TK_RSB);
