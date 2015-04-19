@@ -53,6 +53,7 @@ void backTrack();              //used to go back 1 position after look-ahead
 int isAlpha(char *);           //used to test if current character is an alphabet
 int isNumber(char *);          //used to test if current character si a number
 int checkSpecialChar(char *);  //check if the current character is a special character
+void cleanUp();
 
 
 
@@ -88,6 +89,8 @@ int main()
 
   fcloseall();      //close all- file pointers
 
+  cleanUp();
+
   return 0;
 }
 
@@ -102,6 +105,62 @@ void fileInitialize()
   {
     printf("file initialization error\n");
   }
+}
+
+
+/**/
+void cleanUp()
+{
+  int k, idx;
+
+  fout = fopen("output.txt", "r");
+
+  FILE *flexout = fopen("lexerOutput.txt", "w");
+  
+  if(fout==NULL || flexout==NULL)
+  {
+    printf("file init error\n");
+  }
+
+  char buf[500], fbuf[500];
+
+  while( fgets(buf, 500, fout)!=NULL )
+  {
+    if(strstr(buf, "ValarMorghulis")!=NULL)
+    {
+      fbuf[0] = 'T';fbuf[1] = 'K';fbuf[2] = '_';
+      fbuf[3] = 'V';fbuf[4] = 'M';
+      idx = 5;
+      for(k=5; k<strlen(buf); ++k)
+      {
+        fbuf[idx++] = buf[k];
+      }
+      fbuf[idx] = '\0';
+
+      //fputs(fbuf, flexout);
+    }
+    else if(strstr(buf, "ValarDohaeris")!=NULL)
+    {
+      fbuf[0] = 'T';fbuf[1] = 'K';fbuf[2] = '_';
+      fbuf[3] = 'V';fbuf[4] = 'D';
+      idx = 5;
+      for(k=5; k<strlen(buf); ++k)
+      {
+        fbuf[idx++] = buf[k];
+      }
+      fbuf[idx] = '\0';
+
+      //fputs(fbuf, flexout); 
+    }
+    else
+    {
+      strcpy(fbuf, buf);
+    }
+
+    fputs(fbuf, flexout);
+  }
+
+  fcloseall();
 }
 
 
