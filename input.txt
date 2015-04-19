@@ -3,6 +3,10 @@ ValarMorghulis
 fdef KingsLanding:
 {
   int a, b, c;
+  float p;
+
+  p = 1.101;
+  a = 5;
 
   Hodor(i, 1, 4)
   {
